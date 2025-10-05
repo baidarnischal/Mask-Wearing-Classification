@@ -2,3 +2,4 @@
 training/Dataset
 myenv
 models/*
+*/__pycache__
