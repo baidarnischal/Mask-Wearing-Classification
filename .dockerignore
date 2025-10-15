@@ -1,0 +1,19 @@
+# Virtual environments
+myenv/
+
+# Training data & notebooks
+training/Dataset/
+kaggle_notebooks/
+
+# Python cache
+__pycache__/
+**/__pycache__/
+
+# Jupyter checkpoints
+*.ipynb
+**/.ipynb_checkpoints/
+
+# Git & project config
+.git/
+.gitignore
+.cz.yaml

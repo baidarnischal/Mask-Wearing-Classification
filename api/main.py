@@ -8,6 +8,7 @@ from io import BytesIO
 from PIL import Image
 import tensorflow as tf
 import os
+from pathlib import Path
 
 app = FastAPI()
 
@@ -26,7 +27,10 @@ app.add_middleware(
 # =========================
 # Load model
 # =========================
-MODEL = tf.keras.models.load_model("../models/3_hypertuned_250_epochs/best_mask_cnn_hypertuned_250epochs.keras")
+BASE_DIR = Path(__file__).parent.parent
+MODEL_PATH = BASE_DIR / "models" / "3_hypertuned_250_epochs" / "best_mask_cnn_hypertuned_250epochs.keras"
+MODEL = tf.keras.models.load_model(MODEL_PATH)
+# MODEL = tf.keras.models.load_model("../models/3_hypertuned_250_epochs/best_mask_cnn_hypertuned_250epochs.keras")
 CLASS_NAMES = ["mask_weared_incorrect", "with_mask", "without_mask"]
 
 # =========================
@@ -75,4 +79,4 @@ async def predict(file: UploadFile = File(...)):
 # Run the app
 # =========================
 if __name__ == "__main__":
-    uvicorn.run(app, host='localhost', port=8000)
+    uvicorn.run(app, host='0.0.0.0', port=8000)
