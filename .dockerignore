@@ -4,7 +4,6 @@ myenv/
 # Training data & notebooks
 training/Dataset/
 kaggle_notebooks/
-
 # Python cache
 __pycache__/
 **/__pycache__/
