@@ -8,3 +8,4 @@ matplotlib
 numpy
 matplotlib
 pytest
+httpx
