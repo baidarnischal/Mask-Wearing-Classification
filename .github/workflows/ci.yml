@@ -28,7 +28,10 @@ jobs:
           pip install -r api/requirements.txt
 
       - name: Run tests
+        env:
+            CI: "true"   # <-- tells main.py we're in CI
         run: pytest -v
+
 
   deploy:
     name: Build and Deploy Docker

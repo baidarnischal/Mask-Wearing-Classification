@@ -40,8 +40,22 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Path to trained model
 MODEL_PATH = BASE_DIR / "models" / "3_hypertuned_250_epochs" / "best_mask_cnn_hypertuned_250epochs.keras"
 
-# Load model once at startup
-MODEL = tf.keras.models.load_model(MODEL_PATH)
+# Determine if running in CI environment
+CI_ENV = os.getenv("CI", "false").lower() == "true"
+
+if CI_ENV:
+    print("⚠️ CI environment detected — using mock model")
+    class MockModel:
+        def predict(self, x):
+            import numpy as np
+            # Return mock predictions
+            # Must match the number of classes
+            return np.array([[0.2, 0.5, 0.3]])
+    MODEL = MockModel()
+else:
+    # Load model normally
+    MODEL = tf.keras.models.load_model(MODEL_PATH)
+
 
 # Your classes (must match training order)
 CLASS_NAMES = ["mask_weared_incorrect", "with_mask", "without_mask"]
