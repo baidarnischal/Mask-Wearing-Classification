@@ -44,8 +44,11 @@ MODEL_PATH = BASE_DIR / "models" / "3_hypertuned_250_epochs" / "best_mask_cnn_hy
 CI_ENV = os.getenv("CI", "false").lower() == "true"
 
 if CI_ENV:
-    print("⚠️ CI environment detected — using mock model")
+    print("CI environment detected — using mock model")
     class MockModel:
+        # Fake input shape: (batch_size, height, width, channels)
+        input_shape = (1, 128, 128, 3)  
+        
         def predict(self, x):
             import numpy as np
             # Return mock predictions

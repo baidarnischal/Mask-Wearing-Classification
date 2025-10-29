@@ -10,7 +10,7 @@ on:
 
 jobs:
   integration:
-    name: Integration Tests
+    name: Unit Tests
     runs-on: ubuntu-latest
 
     steps:
