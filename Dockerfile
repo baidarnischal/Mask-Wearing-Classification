@@ -8,7 +8,8 @@ RUN pip install -r /app/api/requirements.txt
 # Copy only necessary files
 COPY api /app/api
 COPY frontend /app/frontend
-COPY models/3_hypertuned_250_epochs /app/models/3_hypertuned_250_epochs
+# COPY models/3_hypertuned_250_epochs /app/models/3_hypertuned_250_epochs
+RUN pip install clearml  # ClearML SDK
 
 
 EXPOSE 8000

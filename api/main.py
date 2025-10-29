@@ -34,29 +34,28 @@ app.add_middleware(
 # Optional: disable XLA JIT to avoid internal convolution errors
 tf.config.optimizer.set_jit(False)
 
-# Base directory
-BASE_DIR = Path(__file__).resolve().parent.parent
-
-# Path to trained model
-MODEL_PATH = BASE_DIR / "models" / "3_hypertuned_250_epochs" / "best_mask_cnn_hypertuned_250epochs.keras"
-
-# Determine if running in CI environment
 CI_ENV = os.getenv("CI", "false").lower() == "true"
+MODEL_DIR = Path("models/3_hypertuned_250_epochs")
+MODEL_PATH = MODEL_DIR / "best_mask_cnn_hypertuned_250epochs.keras"
+MODEL_DIR.mkdir(parents=True, exist_ok=True)
 
 if CI_ENV:
-    print("CI environment detected — using mock model")
+    print("⚠️ CI detected: using mock model")
     class MockModel:
-        # Fake input shape: (batch_size, height, width, channels)
-        input_shape = (1, 128, 128, 3)  
-        
+        input_shape = (1, 128, 128, 3)  # fake input shape
         def predict(self, x):
-            import numpy as np
-            # Return mock predictions
-            # Must match the number of classes
-            return np.array([[0.2, 0.5, 0.3]])
+            return np.array([[0.2, 0.5, 0.3]])  # fake prediction for 3 classes
     MODEL = MockModel()
 else:
-    # Load model normally
+    from clearml import Task
+
+    # Download model if not exists
+    if not MODEL_PATH.exists():
+        print("Downloading model from ClearML...")
+        task = Task.init(project_name="Mask Classification", task_name="Download model", task_type=Task.TaskTypes.inference)
+        task.get_model(model_name="best_mask_cnn_hypertuned_250epochs", destination=str(MODEL_DIR))
+        print("Model downloaded")
+
     MODEL = tf.keras.models.load_model(MODEL_PATH)
 
 

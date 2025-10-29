@@ -12,6 +12,11 @@ jobs:
   integration:
     name: Unit Tests
     runs-on: ubuntu-latest
+    env:
+      CI: "true"
+      CLEARML_API_ACCESS_KEY: ${{ secrets.CLEARML_API_ACCESS_KEY }}
+      CLEARML_API_SECRET_KEY: ${{ secrets.CLEARML_API_SECRET_KEY }}
+      CLEARML_API_HOST: "https://app.clear.ml"
 
     steps:
       - name: Checkout code
@@ -24,7 +29,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install pytest httpx
+          pip install pytest httpx clearml
           pip install -r api/requirements.txt
 
       - name: Run tests
