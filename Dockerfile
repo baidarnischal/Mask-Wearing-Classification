@@ -4,12 +4,12 @@ WORKDIR /app
 # Install dependencies
 COPY api/requirements.txt /app/api/requirements.txt
 RUN pip install -r /app/api/requirements.txt
+RUN pip install clearml  # ClearML SDK
 
 # Copy only necessary files
 COPY api /app/api
 COPY frontend /app/frontend
 # COPY models/3_hypertuned_250_epochs /app/models/3_hypertuned_250_epochs
-RUN pip install clearml  # ClearML SDK
 
 
 EXPOSE 8000

@@ -40,7 +40,7 @@ MODEL_PATH = MODEL_DIR / "best_mask_cnn_hypertuned_250epochs.keras"
 MODEL_DIR.mkdir(parents=True, exist_ok=True)
 
 if CI_ENV:
-    print("⚠️ CI detected: using mock model")
+    print("CI detected: using mock model")
     class MockModel:
         input_shape = (1, 128, 128, 3)  # fake input shape
         def predict(self, x):
