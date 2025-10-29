@@ -52,7 +52,7 @@ else:
     # Download model if not exists
     if not MODEL_PATH.exists():
         print("Downloading model from ClearML...")
-        task = Task.init(project_name="Mask Classification", task_name="Download model", task_type=Task.TaskTypes.inference)
+        task = Task.init(project_name="CNN Experiment Hypertuned", task_name="Hyper Params Tuned 250 epochs", task_type=Task.TaskTypes.inference)
         task.get_model(model_name="best_mask_cnn_hypertuned_250epochs", destination=str(MODEL_DIR))
         print("Model downloaded")
 
