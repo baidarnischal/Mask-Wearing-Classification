@@ -40,5 +40,5 @@ def test_prediction_endpoint():
 def test_predict_no_file():
     """Test /predict with no file sent."""
     response = client.post("/predict")
-    # Expecting 400 (Bad Request) or 422 (Unprocessable Entity)
+    # Expecting 400 (Bad Request) or 422 (Unprocessable Entity).
     assert response.status_code in [400, 422], f"Unexpected status: {response.status_code}"
